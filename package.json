@@ -13,7 +13,7 @@
     "keybindings":[
       {
         "command": "extension.deleteLines",
-        "key": "ctrl+alt+x",
+        "key": "ctrl+alt+d",
         "when": "textInputFocus"
       },
       {
@@ -24,6 +24,16 @@
       {
         "command": "extension.copyLines",
         "key": "ctrl+shift+c",
+        "when": "textInputFocus"
+      },
+      {
+        "command": "extension.cutToNewDocCommand",
+        "key": "ctrl+alt+x",
+        "when": "textInputFocus"
+      },
+      {
+        "command": "extension.copyToNewDocCommand",
+        "key": "ctrl+alt+c",
         "when": "textInputFocus"
       }
     ],
@@ -39,13 +49,22 @@
           {
             "command": "extension.cutLines",
             "title": "Cut Lines Matching Regex Pattern"
+          },
+          {
+            "command": "extension.cutToNewDocCommand",
+            "title": "Cut Lines Matching Regex Pattern and Paste Into New Document"
+          },
+          {
+            "command": "extension.copyToNewDocCommand",
+            "title": "Copy Lines Matching Regex Pattern and Paste Into New Document"
           }
         ]
     },
     "activationEvents": [
         "onCommand:extension.deleteLines",
         "onCommand:extension.copyLines",
-        "onCommand:extension.cutLines"
+        "onCommand:extension.cutLines",
+        "onCommand:extension.cutToNewDocCommand"
     ],
     "main": "./extension.js",
     "scripts": {
