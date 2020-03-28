@@ -4,9 +4,9 @@ VScode extension that allows copying, cutting or even deleting all lines matchin
 
 ## Commands
 
-* Delete Lines Matching Regex Pattern
-* Copy Lines Matching Regex Pattern
-* Cut Lines Matching Regex Pattern
+* Delete Lines Matching Regex Pattern (Shortcut key: ctrl+alt+x")
+* Copy Lines Matching Regex Pattern (Shortcut key: ctrl+shift+c)
+* Cut Lines Matching Regex Pattern (Shortcut key: ctrl+shift+x)
 
 ## TODO 
 * Allow optionally matching on plain text
@@ -16,7 +16,6 @@ VScode extension that allows copying, cutting or even deleting all lines matchin
 ## Release Notes
 
 ### 1.0.0
-
 Initial release. Basic function, regex only matching.
 
 ## Contributions

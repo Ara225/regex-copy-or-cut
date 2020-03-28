@@ -10,6 +10,23 @@
         "Other"
     ],
     "contributes": {
+    "keybindings":[
+      {
+        "command": "extension.deleteLines",
+        "key": "ctrl+alt+x",
+        "when": "textInputFocus"
+      },
+      {
+        "command": "extension.cutLines",
+        "key": "ctrl+shift+x",
+        "when": "textInputFocus"
+      },
+      {
+        "command": "extension.copyLines",
+        "key": "ctrl+shift+c",
+        "when": "textInputFocus"
+      }
+    ],
     "commands": [
           {
             "command": "extension.deleteLines",
