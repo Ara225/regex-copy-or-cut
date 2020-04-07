@@ -28,28 +28,32 @@ function getMatchingLines(editor, searchTerm) {
     var text = '';
     // The end of line most commonly used in the document
     const endOfLine = editor.document.eol;
-
-    // iterate though the lines in the document
-    for (let index = 0; index < editor.document.lineCount; index++) {
-        // Get the current line
-        currentLine = editor.document.lineAt(index);
-        // Get the text of the current line
-        lineContent = currentLine.text
-
-        // If the regex provided in searchTerm matches part of the line
-        if (lineContent.search(searchTerm) != -1) {
-
-            // Append correct end of line char to the line and append to the text string
-            if (endOfLine === vscode.EndOfLine.CRLF) {
-                text += currentLine.text + "\r\n";
+    try {
+        // iterate though the lines in the document
+        for (let index = 0; index < editor.document.lineCount; index++) {
+            // Get the current line
+            currentLine = editor.document.lineAt(index);
+            // Get the text of the current line
+            lineContent = currentLine.text
+    
+            // If the regex provided in searchTerm matches part of the line
+            if (lineContent.search(searchTerm) != -1) {
+    
+                // Append correct end of line char to the line and append to the text string
+                if (endOfLine === vscode.EndOfLine.CRLF) {
+                    text += currentLine.text + "\r\n";
+                }
+                else if (endOfLine === vscode.EndOfLine.LF) {
+                    text += currentLine.text + "\n";
+                }
+    
+                // Append the result to the list of ranges
+                listOfRanges.push(currentLine.rangeIncludingLineBreak)
             }
-            else if (endOfLine === vscode.EndOfLine.LF) {
-                text += currentLine.text + "\n";
-            }
-
-            // Append the result to the list of ranges
-            listOfRanges.push(currentLine.rangeIncludingLineBreak)
         }
+    }
+    catch (e) {
+        vscode.window.showErrorMessage('Unable to complete action due to unexpected error ' + e);
     }
     return [listOfRanges, text];
 }
@@ -57,8 +61,9 @@ function getMatchingLines(editor, searchTerm) {
 /**
  * The function that deletes, copies and cuts based on the output of the other functions
  * @param {String} mode The mode to work in - copy, cut or delete
+ * @param {boolean} shouldOpenNewTab Whether we should open a new tab and paste the text into it
  */
-function commandsImplementation(mode) {
+function commandsImplementation(mode, shouldOpenNewTab) {
     const window = vscode.window;
     var result = showInputBox(window)
     var editor = vscode.window.activeTextEditor;
@@ -72,22 +77,25 @@ function commandsImplementation(mode) {
                 var lines = getMatchingLines(editor, searchTerm)
                 // If there are matching lines
                 if (lines[0] != '') {
-                    if (mode == "cut" || mode == "copy") {
+                    if (mode == "cut" || mode == "copied") {
                         // Write text to clipboard
                         vscode.env.clipboard.writeText(String(lines[1]))
                     }
 
                     // Delete lines
-                    if (mode == "cut" || mode == "delete") {
+                    if (mode == "cut" || mode == "deleted") {
                         editor.edit(function (builder) {
                             for (let index = 0; index < lines[0].length; index++) {
                                 builder.delete(lines[0][index]);
                             }
                         })
                     }
-
+                    if (shouldOpenNewTab == true) {
+                        openDocWithClipboardText();
+                    }
+                    
                     // Inform user of success
-                    window.showInformationMessage(String(lines[0].length) + ' lines were ' + mode.replace('y', 'ied'));
+                    window.showInformationMessage(String(lines[0].length) + ' lines were ' + mode);
                 }
                 else {
                     window.showInformationMessage('No match found');
@@ -107,25 +115,29 @@ function commandsImplementation(mode) {
  * Open new document with clipboard text pasted into it
  */
 function openDocWithClipboardText() {
-    // Set the title of the new document to Untitled
-    var setting = vscode.Uri.parse("untitled:" + "Untitled");
-    // Read clipboard text
-    var clipboardText = vscode.env.clipboard.readText()
-    // Register call back to paste into new doc
-    clipboardText.then(text => {
-        vscode.workspace.openTextDocument(setting).then((a) => {
-            vscode.window.showTextDocument(a, 1, false).then(e => {
-                e.edit(edit => {
-                    edit.insert(new vscode.Position(0, 0), text)
+    try {
+        // Set the title of the new document to Untitled
+        var setting = vscode.Uri.parse("untitled:Untitled - " + new Date().toTimeString().split(' ')[0] + ' ' + new Date().toDateString());
+        // Read clipboard text
+        var clipboardText = vscode.env.clipboard.readText()
+        // Register call back to paste into new doc
+        clipboardText.then(text => {
+            vscode.workspace.openTextDocument(setting).then((a) => {
+                vscode.window.showTextDocument(a, 1, false).then(e => {
+                    e.edit(edit => {
+                        edit.insert(new vscode.Position(0, 0), text)
+                    });
                 });
             });
         });
-    });
+    }
+    catch (e) {
+        vscode.window.showErrorMessage('Unable to complete action due to unexpected error ' + e);
+    }
 }
 
 module.exports = {
     openDocWithClipboardText,
     commandsImplementation,
     getMatchingLines,
-    vscode
 }

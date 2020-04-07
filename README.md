@@ -22,7 +22,7 @@ Initial version. Basic function, regex only matching.
 Added paste into new document functionality
 
 ### 1.2.0
-Refactor code
+Refactor code, fix bugs, improve error handling
 
 ## Contributions
 Not a native JS speaker, so contributions or thoughts are welcome

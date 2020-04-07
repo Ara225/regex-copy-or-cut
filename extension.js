@@ -9,25 +9,23 @@ const utils = require('./utils');
 function activate(context) {
     // Command to delete lines
     let deleteLinesCommand = vscode.commands.registerTextEditorCommand('extension.deleteLines', function () {
-        utils.commandsImplementation('delete')
+        utils.commandsImplementation('deleted', false)
     });
 
     let cutLinesCommand = vscode.commands.registerTextEditorCommand('extension.cutLines', function () {
-        utils.commandsImplementation('cut')
+        utils.commandsImplementation('cut', false)
     });
 
     let copyLinesCommand = vscode.commands.registerTextEditorCommand('extension.copyLines', function () {
-        utils.commandsImplementation('copy');
+        utils.commandsImplementation('copied', false);
     });
 
     let cutToNewDocCommand = vscode.commands.registerTextEditorCommand('extension.cutToNewDocCommand', function () {
-        utils.commandsImplementation('cut');
-        utils.openDocWithClipboardText();
+        utils.commandsImplementation('cut', true);
     });
 
     let copyToNewDocCommand = vscode.commands.registerTextEditorCommand('extension.copyToNewDocCommand', function () {
-        utils.commandsImplementation('copy');
-        utils.openDocWithClipboardText();
+        utils.commandsImplementation('copied', true);
     });
 
     context.subscriptions.push(deleteLinesCommand);
