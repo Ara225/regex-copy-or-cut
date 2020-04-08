@@ -2,6 +2,7 @@
     "name": "regex-copy-or-cut",
     "displayName": "Regex Copy or Cut",
     "description": "Copy, Delete or Cut Lines Matching Regex",
+    "publisher": "ara225",
     "version": "1.0.0",
     "engines": {
         "vscode": "^1.43.0"
