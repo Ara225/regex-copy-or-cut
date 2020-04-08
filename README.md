@@ -1,7 +1,6 @@
 # Regex Copy or Cut README
 
-VScode extension that allows copying, cutting or even deleting all lines matching a regular expression and doing stuff with that
-automatically.
+VScode extension that allows copying, cutting or even deleting all lines matching a regular expression and doing stuff with that automatically.
 
 ## Commands
 
@@ -13,8 +12,6 @@ automatically.
 
 ## TODO 
 * Allow optionally matching on plain text
-* Allow finding text that doesn't match
-* Refactor
 
 ## Release Notes
 
@@ -23,6 +20,9 @@ Initial version. Basic function, regex only matching.
 
 ### 1.1.0
 Added paste into new document functionality
+
+### 1.2.0
+Refactor code, fix bugs, improve error handling
 
 ## Contributions
 Not a native JS speaker, so contributions or thoughts are welcome
