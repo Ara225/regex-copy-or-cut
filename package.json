@@ -2,7 +2,11 @@
     "name": "regex-copy-or-cut",
     "displayName": "Regex Copy or Cut",
     "description": "Copy, Delete or Cut Lines Matching Regex",
-    "publisher": "ara225",
+    "publisher": "ara225",   
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Ara225/regex-copy-or-cut"
+    },
     "version": "1.0.0",
     "engines": {
         "vscode": "^1.43.0"
