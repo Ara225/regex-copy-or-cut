@@ -1,26 +1,39 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import * as utils from './utils';
+/**
+ * Function called on activation of the extension
+ * @param {vscode.ExtensionContext} context
+ */
+ export function activate(context: vscode.ExtensionContext) {
+    // Command to delete lines
+    let deleteLinesCommand = vscode.commands.registerTextEditorCommand('regex-copy-or-cut.deleteLines', function () {
+        utils.commandsImplementation('deleted', false);
+    });
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-	
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "regex-copy-or-cut" is now active!');
+    let cutLinesCommand = vscode.commands.registerTextEditorCommand('regex-copy-or-cut.cutLines', function () {
+        utils.commandsImplementation('cut', false);
+    });
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('regex-copy-or-cut.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Regex Copy or Cut!');
-	});
+    let copyLinesCommand = vscode.commands.registerTextEditorCommand('regex-copy-or-cut.copyLines', function () {
+        utils.commandsImplementation('copied', false);
+    });
 
-	context.subscriptions.push(disposable);
+    let cutToNewDocCommand = vscode.commands.registerTextEditorCommand('regex-copy-or-cut.cutToNewDocCommand', function () {
+        utils.commandsImplementation('cut', true);
+    });
+
+    let copyToNewDocCommand = vscode.commands.registerTextEditorCommand('regex-copy-or-cut.copyToNewDocCommand', function () {
+        utils.commandsImplementation('copied', true);
+    });
+
+    context.subscriptions.push(deleteLinesCommand);
+    context.subscriptions.push(copyLinesCommand);
+    context.subscriptions.push(cutLinesCommand);
+    context.subscriptions.push(cutToNewDocCommand);
+    context.subscriptions.push(copyToNewDocCommand);
+	console.log("Regex copy and cut activated");
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

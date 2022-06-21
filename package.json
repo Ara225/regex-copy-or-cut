@@ -88,6 +88,7 @@
 		"onCommand:regex-copy-or-cut.cutLines",
 		"onCommand:regex-copy-or-cut.cutToNewDocCommand"
 	],
+	"main": "./out/extension.js",
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
