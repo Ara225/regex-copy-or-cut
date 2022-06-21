@@ -1,0 +1,112 @@
+{
+	"name": "regex-copy-or-cut",
+	"displayName": "Regex Copy or Cut",
+	"description": "",
+	"version": "2.0.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Ara225/regex-copy-or-cut"
+	},
+	"engines": {
+		"vscode": "^1.68.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Regex Copy or Cut",
+			"properties": {
+				"regex-copy-or-cut.onlyMatchingText": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "When enabled this ensures that the extension only copies, cuts or deletes matching text. The original version worked only with whole lines"
+				},
+				"regex-copy-or-cut.plainTextMatch": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "When enabled all text matches are plain text. The original version worked only with regexes"
+				}
+			}
+		},		
+		"keybindings": [
+			{
+				"command": "regex-copy-or-cut.deleteLines",
+				"key": "ctrl+alt+d",
+				"when": "textInputFocus"
+			},
+			{
+				"command": "regex-copy-or-cut.cutLines",
+				"key": "ctrl+shift+x",
+				"when": "textInputFocus"
+			},
+			{
+				"command": "regex-copy-or-cut.copyLines",
+				"key": "ctrl+shift+c",
+				"when": "textInputFocus"
+			},
+			{
+				"command": "regex-copy-or-cut.cutToNewDocCommand",
+				"key": "ctrl+alt+x",
+				"when": "textInputFocus"
+			},
+			{
+				"command": "regex-copy-or-cut.copyToNewDocCommand",
+				"key": "ctrl+alt+c",
+				"when": "textInputFocus"
+			}
+		],
+		"commands": [
+			{
+				"command": "regex-copy-or-cut.deleteLines",
+				"title": "Delete Lines Matching Regex Pattern"
+			},
+			{
+				"command": "regex-copy-or-cut.copyLines",
+				"title": "Copy Lines Matching Regex Pattern"
+			},
+			{
+				"command": "regex-copy-or-cut.cutLines",
+				"title": "Cut Lines Matching Regex Pattern"
+			},
+			{
+				"command": "regex-copy-or-cut.cutToNewDocCommand",
+				"title": "Cut Lines Matching Regex Pattern and Paste Into New Document"
+			},
+			{
+				"command": "regex-copy-or-cut.copyToNewDocCommand",
+				"title": "Copy Lines Matching Regex Pattern and Paste Into New Document"
+			}
+		]
+	},
+	"activationEvents": [
+		"onCommand:regex-copy-or-cut.deleteLines",
+		"onCommand:regex-copy-or-cut.copyLines",
+		"onCommand:regex-copy-or-cut.cutLines",
+		"onCommand:regex-copy-or-cut.cutToNewDocCommand"
+	],
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.68.0",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.1",
+		"@types/node": "16.x",
+		"@typescript-eslint/eslint-plugin": "^5.27.0",
+		"@typescript-eslint/parser": "^5.27.0",
+		"eslint": "^8.16.0",
+		"glob": "^8.0.3",
+		"mocha": "^10.0.0",
+		"typescript": "^4.7.2",
+		"@vscode/test-electron": "^2.1.3"
+	}
+}
